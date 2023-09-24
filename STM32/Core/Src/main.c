@@ -123,11 +123,11 @@ int main(void)
   }
 
   void display7SEG(int led,int state){
-		  switch (state) {
-		  	  case 0:
-		  		  display(led,0, 0, 0, 0, 0, 0, 1);
+		switch (state) {
+		case 0:
+		  	display(led,0, 0, 0, 0, 0, 0, 1);
 		  		  break;
-		  	  case 1:
+		  	case 1:
 		  		  display(led, 1, 0, 0, 1, 1, 1, 1);
 		  		  break;
 		  	  case 2:
@@ -197,7 +197,7 @@ int main(void)
     			display7SEG(2, counterC);
     			counterA--;
     			counterC--;
-    		    if(counter == RED - 1){
+    		    if(counter >= RED - 1){
     		    	//set lai state
     		    	led_state=1;
        		        counterA = RED;
@@ -208,7 +208,7 @@ int main(void)
     	}
 
     	if(led_state == 1){
-    		if(counter >=RED && counter < RED + GREEN){
+    		if(counter >= RED && counter < RED + GREEN){
     			//trang thai : led_red_2,led_green_1: ON
     			//			   led_yellow_1,led_red_1,led_green_2,led_yellow_2:OFF
     			HAL_GPIO_WritePin(LED_RED1_GPIO_Port, LED_RED1_Pin,0);
@@ -217,8 +217,8 @@ int main(void)
     			HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin,1);
     			HAL_GPIO_WritePin(LED_YELLOW2_GPIO_Port, LED_YELLOW2_Pin,0);
     			HAL_GPIO_WritePin(LED_GREEN2_GPIO_Port, LED_GREEN2_Pin,0);
-    			display7SEG(1, counterA);
-    			display7SEG(2, counterB);
+    			display7SEG(2, counterA);
+    			display7SEG(1, counterB);
     			counterA--;
     			counterB--;
 
@@ -232,23 +232,16 @@ int main(void)
     		    HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin,0);
     		    HAL_GPIO_WritePin(LED_YELLOW2_GPIO_Port, LED_YELLOW2_Pin,1);
     		    HAL_GPIO_WritePin(LED_GREEN2_GPIO_Port, LED_GREEN2_Pin,0);
-    			display7SEG(1, counterA);
-    			display7SEG(2, counterC);
+    			display7SEG(2, counterA);
+    			display7SEG(1, counterC);
     			counterA--;
     			counterC--;
-
-    		    if(counter == RED + GREEN + YELLOW - 1){
-    		    //set lai state
-    		    	led_state = 0;
-    		        counterA = RED;
-    		        counterB = GREEN;
-    		        counterC = YELLOW;
-    		    }
     		}
     	}
 
     	counter++;
     	if(counter >= RED + GREEN + YELLOW){
+    		//set lai state
     		counter = 0;
     		led_state = 0;
 	        counterA = RED;
